@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Fikr — Learn, Create, Grow 💡</title>
+  <meta name="description" content="Fikr is a safe educational social network for kids aged 8-16. Explore learning streams, join creative clubs, and grow your knowledge in a moderated environment.">
+  <meta name="theme-color" content="#6D28D9">
+
+  <!-- Preconnect for fast font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Modular CSS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components/sidebar.css">
+  <link rel="stylesheet" href="css/components/card.css">
+  <link rel="stylesheet" href="css/components/feed.css">
+  <link rel="stylesheet" href="css/components/modal.css">
+  <link rel="stylesheet" href="css/components/profile.css">
+  <link rel="stylesheet" href="css/components/settings.css">
+</head>
+
+<body>
+  <div class="app" id="app">
+
+    <!-- Mobile hamburger button (visible < 600px) -->
+    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">☰</button>
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- ════════════════════════════════════════════════════════
+         SIDEBAR NAVIGATION
+         ════════════════════════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+
+      <!-- Logo -->
+      <div class="sidebar__logo">
+        <span class="sidebar__logo-icon">💡</span>
+        <h1 class="sidebar__logo-text">Fikr</h1>
+      </div>
+
+      <!-- Nav Items -->
+      <nav class="sidebar__nav">
+        <button class="sidebar__nav-item sidebar__nav-item--active"
+                data-view="dashboard" id="nav-dashboard" aria-label="Dashboard">
+          <span class="sidebar__nav-icon">🏠</span>
+          <span class="sidebar__nav-label">Dashboard</span>
+        </button>
+
+        <button class="sidebar__nav-item"
+                data-view="stream" id="nav-stream" aria-label="Learning Stream">
+          <span class="sidebar__nav-icon">▶️</span>
+          <span class="sidebar__nav-label">Learning Stream</span>
+        </button>
+
+        <button class="sidebar__nav-item"
+                data-view="clubs" id="nav-clubs" aria-label="Creative Clubs">
+          <span class="sidebar__nav-icon">🎨</span>
+          <span class="sidebar__nav-label">Creative Clubs</span>
+        </button>
+
+        <button class="sidebar__nav-item"
+                data-view="profile" id="nav-profile" aria-label="My Profile">
+          <span class="sidebar__nav-icon">👤</span>
+          <span class="sidebar__nav-label">My Profile</span>
+        </button>
+
+        <button class="sidebar__nav-item"
+                data-action="settings" id="nav-settings" aria-label="Settings">
+          <span class="sidebar__nav-icon">⚙️</span>
+          <span class="sidebar__nav-label">Settings</span>
+        </button>
+      </nav>
+
+      <!-- User Card -->
+      <div class="sidebar__user">
+        <div class="sidebar__avatar" id="sidebar-avatar">🦊</div>
+        <div class="sidebar__user-info">
+          <span class="sidebar__user-name" id="sidebar-username">Alex</span>
+          <span class="sidebar__user-level" id="sidebar-level">Level 12</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ════════════════════════════════════════════════════════
+         MAIN CONTENT AREA
+         ════════════════════════════════════════════════════════ -->
+    <main class="app__content" id="main-content">
+
+      <!-- ── DASHBOARD VIEW ─────────────────────────────────── -->
+      <section class="view view--active" id="view-dashboard" aria-label="Dashboard">
+        <div class="bento-grid">
+
+          <!-- Welcome Card -->
+          <div class="card card--welcome">
+            <div class="card__welcome-content">
+              <span class="card__welcome-wave">👋</span>
+              <div>
+                <h2 class="card__welcome-title">Welcome back, <span id="welcome-name">Alex</span>!</h2>
+                <p class="card__welcome-subtitle">
+                  You're on a <strong id="welcome-streak">7-day</strong> learning streak. Keep it up!
+                </p>
+              </div>
+            </div>
+            <div class="card__welcome-decoration"></div>
+          </div>
+
+          <!-- Profile Card -->
+          <div class="card card--profile">
+            <div class="card__profile-avatar" id="profile-avatar">🦊</div>
+            <h3 class="card__profile-name" id="profile-name">Alex</h3>
+            <div class="card__profile-badges" id="profile-badges">
+              <!-- Rendered reactively by JS -->
+            </div>
+          </div>
+
+          <!-- Learning Points Card -->
+          <div class="card card--points">
+            <div class="card__points-header">
+              <span class="card__points-icon">⭐</span>
+              <h3 class="card__points-title">Learning Points</h3>
+            </div>
+            <div class="card__points-value" id="points-display">2,450</div>
+            <div class="card__points-bar">
+              <div class="card__points-progress" id="points-progress" style="width: 45%"></div>
+            </div>
+            <p class="card__points-next">550 points to Level 13</p>
+            <button class="btn btn--accent card__points-earn" id="earn-points-btn">
+              + Earn Points
+            </button>
+          </div>
+
+          <!-- Streak Card -->
+          <div class="card card--streak">
+            <span class="card__streak-icon">🔥</span>
+            <div class="card__streak-value" id="streak-display">7</div>
+            <p class="card__streak-label">Day Streak</p>
+          </div>
+
+          <!-- Stat Card -->
+          <div class="card card--stat">
+            <span class="card__stat-icon">📚</span>
+            <div class="card__stat-value">42</div>
+            <p class="card__stat-label">Lessons Done</p>
+          </div>
+
+          <!-- Stream Preview Card -->
+          <div class="card card--stream-preview">
+            <div class="card__header">
+              <h3>📺 Trending Now</h3>
+              <button class="btn btn--text" data-view="stream">See All →</button>
+            </div>
+            <div class="card__stream-preview-content" id="stream-preview">
+              <!-- Rendered by video-engine.js -->
+            </div>
+          </div>
+
+          <!-- Clubs Preview Card -->
+          <div class="card card--clubs-preview">
+            <div class="card__header">
+              <h3>🎨 Your Clubs</h3>
+              <button class="btn btn--text" data-view="clubs">Explore →</button>
+            </div>
+            <div class="card__clubs-list" id="clubs-preview">
+              <!-- Rendered by app.js -->
+            </div>
+          </div>
+
+          <!-- Achievements Card -->
+          <div class="card card--achievements">
+            <div class="card__header">
+              <h3>🏆 Recent Achievements</h3>
+            </div>
+            <div class="card__achievements-grid">
+              <div class="achievement achievement--earned">🎯</div>
+              <div class="achievement achievement--earned">🌟</div>
+              <div class="achievement achievement--earned">🎨</div>
+              <div class="achievement achievement--earned">🔬</div>
+              <div class="achievement">🎵</div>
+              <div class="achievement">📐</div>
+              <div class="achievement">🌍</div>
+              <div class="achievement">🚀</div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── LEARNING STREAM VIEW ───────────────────────────── -->
+      <section class="view" id="view-stream" aria-label="Learning Stream">
+        <div class="stream" id="learning-stream">
+          <!-- Dynamically rendered by video-engine.js -->
+        </div>
+      </section>
+
+      <!-- ── CREATIVE CLUBS VIEW ────────────────────────────── -->
+      <section class="view" id="view-clubs" aria-label="Creative Clubs">
+        <div class="clubs">
+          <div class="clubs__header">
+            <h2 class="clubs__title">Creative Clubs</h2>
+            <p class="clubs__subtitle">Find your tribe and create together! 🎉</p>
+          </div>
+
+          <!-- Search bar -->
+          <div class="clubs__search">
+            <span class="clubs__search-icon" aria-hidden="true">🔎</span>
+            <input class="clubs__search-input" type="search"
+                   id="clubs-search-input"
+                   placeholder="Search clubs by name…"
+                   aria-label="Search clubs"
+                   autocomplete="off">
+            <button class="clubs__search-clear" id="clubs-search-clear"
+                    aria-label="Clear search" hidden>✕</button>
+          </div>
+
+          <div class="clubs__filters" id="club-filters">
+            <!-- Rendered by app.js -->
+          </div>
+          <div class="clubs__grid" id="clubs-grid">
+            <!-- Rendered by app.js -->
+          </div>
+          <p class="clubs__empty" id="clubs-empty" hidden>
+            No clubs match your search. Try a different keyword 🔍
+          </p>
+        </div>
+      </section>
+
+      <!-- ── PROFILE VIEW ──────────────────────────────────── -->
+      <section class="view" id="view-profile" aria-label="My Profile">
+        <div class="profile">
+
+          <!-- Banner -->
+          <div class="profile__banner"></div>
+
+          <!-- Avatar & Info -->
+          <div class="profile__header">
+            <div class="profile__avatar-wrapper">
+              <div class="profile__avatar" id="profile-page-avatar">🦊</div>
+              <span class="profile__avatar-level" id="profile-page-level">12</span>
+            </div>
+            <div class="profile__info">
+              <h2 class="profile__name" id="profile-page-name">Alex</h2>
+              <p class="profile__meta">
+                <span class="profile__level-text" id="profile-page-level-text">Level 12 · Explorer</span>
+                <span class="profile__joined">Member since January 2026</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- Stats Row -->
+          <div class="profile__stats">
+            <div class="profile__stat">
+              <span class="profile__stat-value" id="profile-page-points">2,450</span>
+              <span class="profile__stat-label">Points</span>
+            </div>
+            <div class="profile__stat">
+              <span class="profile__stat-value" id="profile-page-streak">7</span>
+              <span class="profile__stat-label">Day Streak</span>
+            </div>
+            <div class="profile__stat">
+              <span class="profile__stat-value">12</span>
+              <span class="profile__stat-label">Videos</span>
+            </div>
+            <div class="profile__stat">
+              <span class="profile__stat-value">4</span>
+              <span class="profile__stat-label">Clubs</span>
+            </div>
+          </div>
+
+          <!-- Badges -->
+          <div class="profile__section">
+            <h3 class="profile__section-title">🏆 My Badges</h3>
+            <div class="profile__badges-grid" id="profile-badges-grid"></div>
+          </div>
+
+          <!-- Creations -->
+          <div class="profile__section">
+            <h3 class="profile__section-title">🎬 My Creations</h3>
+            <div class="profile__creations-grid" id="profile-creations-grid"></div>
+          </div>
+
+          <!-- Joined Clubs -->
+          <div class="profile__section">
+            <h3 class="profile__section-title">🎨 Joined Clubs</h3>
+            <div class="profile__clubs-list" id="profile-clubs-list"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ── SETTINGS VIEW ─────────────────────────────────── -->
+      <section class="view" id="view-settings" aria-label="Settings">
+        <div class="settings">
+
+          <div class="settings__header">
+            <h2 class="settings__title">⚙️ Settings</h2>
+            <p class="settings__subtitle">Manage your account and preferences</p>
+          </div>
+
+          <!-- Account -->
+          <div class="settings__group">
+            <h3 class="settings__group-title">👤 Account</h3>
+            <div class="settings__card">
+              <div class="settings__avatar-section">
+                <div class="settings__avatar-current">
+                  <div class="settings__avatar-display" id="settings-avatar-display">🦊</div>
+                  <div>
+                    <span class="settings__item-label">Choose Your Avatar</span>
+                    <span class="settings__item-desc" style="display:block;">Pick the character that represents you</span>
+                  </div>
+                </div>
+                <div class="settings__avatar-picker" id="avatar-picker"></div>
+              </div>
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Display Name</span>
+                  <span class="settings__item-desc">How others see you on Fikr</span>
+                </div>
+                <input class="settings__input" type="text" id="settings-name-input"
+                       value="Alex" maxlength="20" placeholder="Your name...">
+              </div>
+            </div>
+          </div>
+
+          <!-- Appearance -->
+          <div class="settings__group">
+            <h3 class="settings__group-title">🎨 Appearance</h3>
+            <div class="settings__card">
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Dark Mode</span>
+                  <span class="settings__item-desc">Easy on the eyes</span>
+                </div>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" checked data-setting="darkMode">
+                  <span class="toggle__slider"></span>
+                </label>
+              </div>
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Animations</span>
+                  <span class="settings__item-desc">Motion and transitions</span>
+                </div>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" checked data-setting="animations">
+                  <span class="toggle__slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notifications -->
+          <div class="settings__group">
+            <h3 class="settings__group-title">🔔 Notifications</h3>
+            <div class="settings__card">
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">New Videos</span>
+                  <span class="settings__item-desc">When creators you follow post</span>
+                </div>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" checked data-setting="notifyVideos">
+                  <span class="toggle__slider"></span>
+                </label>
+              </div>
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Club Updates</span>
+                  <span class="settings__item-desc">Activity in your clubs</span>
+                </div>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" checked data-setting="notifyClubs">
+                  <span class="toggle__slider"></span>
+                </label>
+              </div>
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Achievements</span>
+                  <span class="settings__item-desc">When you earn badges or level up</span>
+                </div>
+                <label class="toggle">
+                  <input class="toggle__input" type="checkbox" checked data-setting="notifyAchievements">
+                  <span class="toggle__slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Safety & Privacy -->
+          <div class="settings__group">
+            <h3 class="settings__group-title">🛡️ Safety & Privacy</h3>
+            <div class="settings__card">
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Content Filter</span>
+                  <span class="settings__item-desc">Age-appropriate filtering level</span>
+                </div>
+                <select class="settings__select" id="content-filter">
+                  <option value="strict">Strict (8-10)</option>
+                  <option value="moderate" selected>Moderate (11-13)</option>
+                  <option value="standard">Standard (14-16)</option>
+                </select>
+              </div>
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Parental Gate</span>
+                  <span class="settings__item-desc">Math challenge for settings access</span>
+                </div>
+                <span class="settings__badge settings__badge--active">Active ✅</span>
+              </div>
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Data Protection</span>
+                  <span class="settings__item-desc">COPPA compliant · end-to-end encrypted</span>
+                </div>
+                <span class="settings__badge settings__badge--active">Protected 🔒</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- About -->
+          <div class="settings__group">
+            <h3 class="settings__group-title">ℹ️ About Fikr</h3>
+            <div class="settings__card">
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Version</span>
+                </div>
+                <span class="settings__value">1.0.0</span>
+              </div>
+              <div class="settings__item">
+                <div class="settings__item-info">
+                  <span class="settings__item-label">Homepage</span>
+                </div>
+                <a href="index.html" class="btn btn--text">Visit →</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reset & Sign Out -->
+          <div class="settings__footer">
+            <button class="btn btn--ghost settings__reset" id="settings-reset">
+              Reset to Defaults ↺
+            </button>
+            <button class="btn btn--ghost settings__signout" id="settings-signout">
+              Sign Out
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ════════════════════════════════════════════════════════
+         PARENTAL GATE MODAL
+         ════════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="parental-gate" hidden
+         aria-modal="true" role="dialog" aria-label="Parental verification">
+      <div class="modal">
+        <div class="modal__header">
+          <span class="modal__icon">🔒</span>
+          <h2 class="modal__title">Parent Check</h2>
+          <p class="modal__subtitle">Solve this math problem to continue</p>
+        </div>
+        <div class="modal__problem" id="gate-problem">— × — = ?</div>
+        <input class="modal__input"
+               type="number"
+               id="gate-answer"
+               placeholder="Your answer..."
+               autocomplete="off"
+               aria-label="Enter your answer">
+        <div class="modal__actions">
+          <button class="btn btn--ghost" id="gate-cancel">Cancel</button>
+          <button class="btn btn--primary" id="gate-submit">Verify</button>
+        </div>
+        <p class="modal__feedback" id="gate-feedback"></p>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         TOAST NOTIFICATION CONTAINER
+         ════════════════════════════════════════════════════════ -->
+    <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  </div>
+
+  <!-- JavaScript Entry Point (ES Module) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

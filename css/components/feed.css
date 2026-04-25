@@ -1,0 +1,385 @@
+/**
+ * Learning Stream (Video Feed) Styles
+ * 
+ * Vertical scroll-snapping video feed with animated gradient
+ * placeholders, floating decorative shapes, engagement sidebar,
+ * and a slide-up comments panel.
+ */
+
+/* ============================================
+   STREAM CONTAINER — Scroll Snap Host
+   ============================================ */
+.stream {
+  height: calc(100vh - 64px);
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  border-radius: var(--radius-lg);
+}
+
+/* Hide scrollbar for clean aesthetic */
+.stream::-webkit-scrollbar {
+  width: 0;
+}
+
+.stream {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ============================================
+   STREAM ITEM — Single Video Card
+   ============================================ */
+.stream__item {
+  height: calc(100vh - 64px);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  display: flex;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+/* ============================================
+   VIDEO BACKGROUND — Animated Gradient
+   Simulates video content with moving gradients
+   ============================================ */
+.stream__video-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    var(--gradient-start, #667eea),
+    var(--gradient-mid, #764ba2),
+    var(--gradient-end, #667eea)
+  );
+  background-size: 300% 300%;
+  transition: filter 0.3s ease;
+}
+
+/* Active video plays the gradient animation */
+.stream__item--active .stream__video-bg {
+  animation: gradientShift 6s ease infinite;
+}
+
+/* Inactive videos are dimmed */
+.stream__item:not(.stream__item--active) .stream__video-bg {
+  filter: brightness(0.6);
+}
+
+/* ============================================
+   FLOATING DECORATIVE SHAPES
+   Adds depth and visual interest to placeholders
+   ============================================ */
+.stream__shapes {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.stream__shape {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.12;
+  background: white;
+}
+
+/* Shapes only animate when the video is active */
+.stream__item--active .stream__shape {
+  animation: float 4s ease-in-out infinite;
+}
+
+.stream__shape--1 {
+  width: 120px;
+  height: 120px;
+  top: 15%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.stream__shape--2 {
+  width: 80px;
+  height: 80px;
+  top: 40%;
+  right: 15%;
+  animation-delay: 1.5s;
+  border-radius: var(--radius-lg);
+}
+
+.stream__shape--3 {
+  width: 60px;
+  height: 60px;
+  bottom: 25%;
+  left: 30%;
+  animation-delay: 3s;
+}
+
+/* ============================================
+   PLAY INDICATOR — Centered Play Button
+   ============================================ */
+.stream__play-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  opacity: 0;
+  transition: all var(--transition-base);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Show play button when video is paused (inactive) */
+.stream__item:not(.stream__item--active) .stream__play-indicator {
+  opacity: 1;
+}
+
+/* Hide + scale out when playing */
+.stream__item--active .stream__play-indicator {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+/* ============================================
+   DURATION BADGE
+   ============================================ */
+.stream__duration {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 2;
+  color: white;
+}
+
+/* ============================================
+   VIDEO INFO OVERLAY — Bottom gradient
+   ============================================ */
+.stream__info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 80px;
+  padding: 80px 24px 32px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  z-index: 2;
+}
+
+.stream__creator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.stream__creator-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.stream__creator-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.stream__title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  color: white;
+}
+
+.stream__category {
+  display: inline-flex;
+  padding: 4px 12px;
+  background: var(--color-primary);
+  border-radius: var(--radius-pill);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: white;
+}
+
+/* ============================================
+   ENGAGEMENT ACTIONS SIDEBAR — Right side
+   ============================================ */
+.stream__actions {
+  position: absolute;
+  right: 16px;
+  bottom: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 3;
+}
+
+.stream__action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  transition: all var(--transition-base);
+}
+
+.stream__action-btn:hover {
+  transform: scale(1.15);
+}
+
+.stream__action-btn:active {
+  transform: scale(0.9);
+}
+
+.stream__action-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all var(--transition-base);
+}
+
+.stream__action-btn:hover .stream__action-icon {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Liked state — red glow */
+.stream__action-btn--liked .stream__action-icon {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Remix button — purple-amber gradient glow */
+.stream__action-btn--remix .stream__action-icon {
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.4), rgba(245, 158, 11, 0.3));
+  border-color: var(--color-primary-light);
+  animation: pulse 2s ease infinite;
+}
+
+.stream__action-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+/* ============================================
+   COMMENTS OVERLAY — Slide-up panel
+   ============================================ */
+.stream__comments {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 50%;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 20px 24px;
+  z-index: 5;
+  transform: translateY(100%);
+  transition: transform var(--transition-slow);
+  overflow-y: auto;
+}
+
+.stream__comments--open {
+  transform: translateY(0);
+}
+
+.stream__comments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stream__comments-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.stream__comments-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 0.9rem;
+}
+
+.stream__comments-close:hover {
+  background: var(--color-bg-surface-hover);
+}
+
+/* Individual comment */
+.stream__comment {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.stream__comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.stream__comment-body {
+  flex: 1;
+}
+
+.stream__comment-user {
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+  color: var(--color-primary-light);
+}
+
+.stream__comment-text {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}

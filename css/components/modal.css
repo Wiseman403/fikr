@@ -1,0 +1,198 @@
+/**
+ * Modal / Parental Gate Styles
+ * 
+ * Fullscreen overlay with backdrop blur, centered modal card,
+ * math problem display, input field, and feedback messages.
+ */
+
+/* ============================================
+   MODAL OVERLAY — Blurred backdrop
+   ============================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: var(--z-modal-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-base);
+}
+
+.modal-overlay--visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================
+   MODAL CONTAINER
+   ============================================ */
+.modal {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  transform: scale(0.9) translateY(20px);
+  transition: transform var(--transition-slow);
+  box-shadow:
+    var(--shadow-lg),
+    0 0 60px rgba(109, 40, 217, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-overlay--visible .modal {
+  transform: scale(1) translateY(0);
+}
+
+/* Decorative radial glow behind modal */
+.modal::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(109, 40, 217, 0.08),
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   MODAL HEADER
+   ============================================ */
+.modal__header {
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.modal__icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 12px;
+  animation: bounceIn 0.6s ease backwards;
+  animation-delay: 0.2s;
+}
+
+.modal__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.modal__subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   MATH PROBLEM DISPLAY
+   ============================================ */
+.modal__problem {
+  font-size: 2.5rem;
+  font-weight: 800;
+  padding: 24px;
+  background: var(--color-bg-deep);
+  border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+  letter-spacing: 0.05em;
+  color: var(--color-primary-light);
+  border: 1px solid rgba(109, 40, 217, 0.2);
+  position: relative;
+}
+
+/* ============================================
+   ANSWER INPUT
+   ============================================ */
+.modal__input {
+  width: 100%;
+  padding: 16px 20px;
+  background: var(--color-bg-deep);
+  border: 2px solid var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-text-primary);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  margin-bottom: 20px;
+  font-family: 'Lexend', sans-serif;
+}
+
+.modal__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-glow);
+}
+
+.modal__input::placeholder {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+/* Remove number input spinners for cleaner look */
+.modal__input::-webkit-outer-spin-button,
+.modal__input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modal__input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+.modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal__actions .btn {
+  flex: 1;
+  padding: 14px 20px;
+}
+
+/* ============================================
+   FEEDBACK MESSAGES
+   ============================================ */
+.modal__feedback {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-height: 24px;
+  transition: all var(--transition-base);
+}
+
+.modal__feedback--success {
+  color: var(--color-success);
+}
+
+.modal__feedback--error {
+  color: var(--color-error);
+  animation: shake 0.4s ease;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 480px) {
+  .modal {
+    padding: 28px 20px;
+    border-radius: var(--radius-lg);
+  }
+
+  .modal__problem {
+    font-size: 2rem;
+    padding: 18px;
+  }
+}

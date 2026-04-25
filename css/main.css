@@ -1,0 +1,641 @@
+/**
+ * Fikr — Main Stylesheet
+ * 
+ * Global styles, CSS custom properties, reset, layout system,
+ * button components, utility classes, and animations.
+ * 
+ * @version 1.0.0
+ */
+
+/* ============================================
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   (Lexend font is preloaded via <link> in HTML)
+   ============================================ */
+:root {
+  /* Primary Palette */
+  --color-primary: #6D28D9;
+  --color-primary-light: #8B5CF6;
+  --color-primary-dark: #5B21B6;
+  --color-primary-glow: rgba(109, 40, 217, 0.4);
+
+  /* Accent Palette */
+  --color-accent: #F59E0B;
+  --color-accent-light: #FBBF24;
+  --color-accent-dark: #D97706;
+  --color-accent-glow: rgba(245, 158, 11, 0.4);
+
+  /* Background Palette */
+  --color-bg-deep: #0F172A;
+  --color-bg-surface: #1E293B;
+  --color-bg-surface-hover: #253449;
+  --color-bg-elevated: #334155;
+
+  /* Text Palette */
+  --color-text-primary: #F8FAFC;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+
+  /* Semantic Colors */
+  --color-success: #10B981;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+  --color-warning: #F59E0B;
+
+  /* Border Radius */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.35);
+  --shadow-glow-primary: 0 0 20px var(--color-primary-glow);
+  --shadow-glow-accent: 0 0 20px var(--color-accent-glow);
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout */
+  --sidebar-width: 280px;
+  --content-padding: 32px;
+
+  /* Z-Index Scale */
+  --z-sidebar: 100;
+  --z-modal-overlay: 500;
+  --z-modal: 510;
+  --z-toast: 600;
+}
+
+/* ============================================
+   2b. LIGHT THEME OVERRIDE
+   ============================================ */
+[data-theme="light"] {
+  --color-bg-deep: #F1F5F9;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-surface-hover: #E8ECF1;
+  --color-bg-elevated: #CBD5E1;
+
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.10);
+}
+
+[data-theme="light"] .sidebar {
+  background: #FFFFFF;
+  border-right-color: #E2E8F0;
+}
+
+[data-theme="light"] .sidebar__nav-item--active {
+  background: rgba(109, 40, 217, 0.08);
+}
+
+[data-theme="light"] .toast {
+  background: #FFFFFF;
+  border-color: #E2E8F0;
+}
+
+[data-theme="light"] .modal {
+  background: #FFFFFF;
+}
+
+[data-theme="light"] .modal__problem {
+  background: #F1F5F9;
+  border-color: rgba(109, 40, 217, 0.15);
+}
+
+[data-theme="light"] .modal__input {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .settings__card {
+  border-color: #E2E8F0;
+}
+
+[data-theme="light"] .settings__input,
+[data-theme="light"] .settings__select {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+[data-theme="light"] .toggle__slider {
+  background: #CBD5E1;
+}
+
+[data-theme="light"] .stream__comments {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="light"] .profile__stat {
+  background: #FFFFFF;
+}
+
+/* ============================================
+   2c. NO-ANIMATIONS MODE
+   ============================================ */
+.no-animations *,
+.no-animations *::before,
+.no-animations *::after {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+/* ============================================
+   3. CSS RESET
+   ============================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Lexend', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--color-bg-deep);
+  color: var(--color-text-primary);
+  min-height: 100vh;
+  overflow: hidden;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+input {
+  font-family: inherit;
+  border: none;
+  outline: none;
+  background: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* ============================================
+   4. APP LAYOUT
+   ============================================ */
+.app {
+  display: flex;
+  height: 100vh;
+  position: relative;
+}
+
+.app__content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--content-padding);
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+.app__content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.app__content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.app__content::-webkit-scrollbar-thumb {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-pill);
+}
+
+.app__content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* ============================================
+   5. VIEW MANAGEMENT
+   ============================================ */
+.view {
+  display: none;
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.view--active {
+  display: block;
+  animation: viewEnter 0.4s ease forwards;
+}
+
+/* ============================================
+   6. BENTO GRID LAYOUT
+   ============================================ */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  grid-auto-rows: minmax(140px, auto);
+}
+
+/* ============================================
+   7. BUTTON SYSTEM
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.btn:hover::after {
+  opacity: 1;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Primary Button */
+.btn--primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: white;
+  box-shadow: var(--shadow-glow-primary);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 0 30px var(--color-primary-glow);
+  transform: translateY(-1px);
+}
+
+/* Accent Button */
+.btn--accent {
+  background: linear-gradient(135deg, var(--color-accent-dark), var(--color-accent));
+  color: var(--color-bg-deep);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.btn--accent:hover {
+  box-shadow: 0 0 30px var(--color-accent-glow);
+  transform: translateY(-1px);
+}
+
+/* Ghost Button */
+.btn--ghost {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+}
+
+.btn--ghost:hover {
+  background: var(--color-bg-surface-hover);
+  color: var(--color-text-primary);
+}
+
+/* Text Button */
+.btn--text {
+  background: transparent;
+  color: var(--color-primary-light);
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.btn--text:hover {
+  color: var(--color-accent);
+}
+
+/* Joined state */
+.btn--joined {
+  background: var(--color-success) !important;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3) !important;
+  color: white !important;
+}
+
+/* Joined → Leave hover (red) */
+.btn--joined:hover {
+  background: var(--color-error) !important;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* ============================================
+   8. TOAST NOTIFICATIONS
+   ============================================ */
+.toast-container {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.toast {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+  animation: toastIn 0.4s ease forwards;
+  pointer-events: auto;
+  min-width: 280px;
+  max-width: 400px;
+}
+
+.toast--success {
+  border-color: var(--color-success);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.toast--info {
+  border-color: var(--color-info);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+}
+
+.toast--warning {
+  border-color: var(--color-warning);
+}
+
+.toast--leaving {
+  animation: toastOut 0.3s ease forwards;
+}
+
+.toast__icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.toast__content {
+  flex: 1;
+}
+
+.toast__title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.toast__message {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   9. UTILITY CLASSES
+   ============================================ */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================
+   10. KEYFRAME ANIMATIONS
+   ============================================ */
+@keyframes viewEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(5deg); }
+  66% { transform: translateY(5px) rotate(-3deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes toastIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes toastOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+@keyframes pointsPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); color: var(--color-accent); }
+  100% { transform: scale(1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(20deg); }
+  75% { transform: rotate(-15deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+
+/* ============================================
+   11. RESPONSIVE BREAKPOINTS
+   ============================================ */
+@media (max-width: 1200px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --sidebar-width: 72px;
+    --content-padding: 20px;
+  }
+
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --sidebar-width: 0px;
+    --content-padding: 16px;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Sidebar hidden off-canvas by default on mobile */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--transition-slow);
+    width: 280px;
+    z-index: 999;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .sidebar--open {
+    transform: translateX(0);
+  }
+
+  /* Main content has no sidebar offset on mobile */
+  .app__content {
+    margin-left: 0;
+  }
+
+  /* Overlay when sidebar is open */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 998;
+  }
+
+  .sidebar-overlay--visible {
+    display: block;
+    animation: overlayFade 0.25s ease;
+  }
+}
+
+@keyframes overlayFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================
+   12. MOBILE HAMBURGER BUTTON
+   ============================================ */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 997;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  color: var(--color-text-primary);
+}
+
+.mobile-menu-btn:hover {
+  background: var(--color-bg-surface-hover);
+}
+
+@media (max-width: 600px) {
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .app__content {
+    padding-top: 72px;
+  }
+}

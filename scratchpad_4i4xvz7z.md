@@ -1,0 +1,13 @@
+# Fikr App Demo Walkthrough
+- [x] Navigate to http://localhost:3000
+- [x] Dashboard: Take initial screenshot
+- [x] Dashboard: Click "+ Earn Points" 3 times (1s pause), take screenshot
+- [x] Sidebar: Navigate to "Learning Stream", take screenshot
+- [x] Learning Stream: Scroll to second video, take screenshot (snap behavior)
+- [x] Learning Stream: Like video, open comments, take screenshot (sanitization)
+- [x] Learning Stream: Click "Remix", take screenshot (toast)
+- [x] Sidebar: Navigate to "Creative Clubs", take screenshot
+- [x] Creative Clubs: Filter by "Coding", take screenshot
+- [x] Sidebar: Navigate to Dashboard
+- [x] Parental Gate: Click Settings, take screenshot of math problem
+- [x] Parental Gate: Solve math problem, take screenshot of success
