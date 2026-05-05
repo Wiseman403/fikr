@@ -1,0 +1,991 @@
+/**
+ * Curriculum Path Styles
+ *
+ * Shared styles for the three drill-down views:
+ *   • Years grid
+ *   • Courses grid (per year)
+ *   • Course detail (item list)
+ *   • Content modal (scenario · topic · exercise · quiz · video · project)
+ *
+ * All cards expose a `--card-color` custom property so subjects/years
+ * can colour-theme their UI without overriding any rule.
+ */
+
+/* ============================================
+   1. SHARED LAYOUT
+   ============================================ */
+.curriculum {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.curriculum__header {
+  margin-bottom: 24px;
+}
+
+.curriculum__title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.curriculum__subtitle {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+.curriculum__empty {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+}
+
+/* ============================================
+   2. BREADCRUMB
+   ============================================ */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.breadcrumb__crumb {
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.breadcrumb__crumb:hover {
+  background: var(--color-bg-surface-hover);
+  color: var(--color-text-primary);
+  transform: translateX(-2px);
+}
+
+.breadcrumb__sep {
+  opacity: 0.5;
+}
+
+.breadcrumb__current {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  padding: 6px 8px;
+}
+
+/* ============================================
+   3. SEARCH + FILTER PILLS  (shared with Clubs)
+   ============================================ */
+.curriculum__search {
+  position: relative;
+  margin-bottom: 14px;
+  max-width: 480px;
+}
+
+.curriculum__search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.curriculum__search-input {
+  width: 100%;
+  padding: 12px 16px 12px 44px;
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-pill);
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+  font-family: 'Lexend', sans-serif;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.curriculum__search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.curriculum__search-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+  outline: none;
+}
+
+.curriculum__filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.curriculum__filters--types {
+  margin-bottom: 12px;
+}
+
+.curriculum__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--color-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-family: 'Lexend', sans-serif;
+}
+
+.curriculum__pill:hover {
+  background: var(--color-bg-surface-hover);
+  color: var(--color-text-primary);
+  transform: translateY(-1px);
+}
+
+.curriculum__pill--active {
+  background: linear-gradient(135deg, var(--pill-color, var(--color-primary)), var(--color-primary-light));
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 0 16px rgba(109, 40, 217, 0.25);
+}
+
+.curriculum__pill--active:hover {
+  transform: none;
+}
+
+.curriculum__filters--meta {
+  align-items: center;
+}
+
+.curriculum__filter-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.curriculum__filter-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.curriculum__select {
+  padding: 8px 32px 8px 12px;
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  color: var(--color-text-primary);
+  font-family: 'Lexend', sans-serif;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.curriculum__select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+  outline: none;
+}
+
+/* ============================================
+   4. YEARS GRID
+   ============================================ */
+.curriculum__years-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.year-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all var(--transition-base);
+  animation: slideUp 0.4s ease backwards;
+  text-align: left;
+}
+
+.year-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--card-color);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25), 0 0 30px var(--card-color);
+}
+
+.year-card__bg {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--card-color), transparent 65%);
+  opacity: 0.35;
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.year-card__emoji {
+  font-size: 2.6rem;
+  line-height: 1;
+  z-index: 1;
+}
+
+.year-card__label {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--card-color);
+  z-index: 1;
+}
+
+.year-card__age {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.year-card__stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: var(--color-text-secondary);
+}
+
+/* ============================================
+   5. COURSES GRID
+   ============================================ */
+.curriculum__courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-align: left;
+  animation: slideUp 0.35s ease backwards;
+}
+
+.course-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--card-color);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+.course-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.course-card__emoji {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.course-card__badge {
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--color-success);
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.course-card__name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--card-color);
+  margin: 0;
+}
+
+.course-card__desc {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.course-card__footer {
+  margin-top: 4px;
+}
+
+.course-card__progress-bar {
+  height: 6px;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.course-card__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--card-color), var(--color-accent));
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.course-card__progress-label {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   6. COURSE BANNER (detail view header)
+   ============================================ */
+.course-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+
+.course-banner__bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--card-color, var(--color-primary)), transparent 70%);
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.course-banner__main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  z-index: 1;
+}
+
+.course-banner__emoji {
+  font-size: 3.2rem;
+  line-height: 1;
+}
+
+.course-banner__title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 2px;
+  color: var(--card-color);
+}
+
+.course-banner__meta {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 4px;
+}
+
+.course-banner__desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  max-width: 460px;
+}
+
+.course-banner__progress {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  z-index: 1;
+}
+
+.course-banner__pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--color-text-primary);
+}
+
+.progress-ring circle:nth-child(2) {
+  transition: stroke-dasharray 0.8s ease;
+}
+
+/* ============================================
+   7. ITEM LIST (course detail)
+   ============================================ */
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: all var(--transition-base);
+  animation: slideUp 0.3s ease backwards;
+  font-family: 'Lexend', sans-serif;
+}
+
+.item-row:not(:disabled):hover {
+  transform: translateX(4px);
+  border-color: var(--type-color);
+  background: var(--color-bg-surface-hover);
+}
+
+.item-row--locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.item-row--completed {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.02));
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+.item-row__type-badge {
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.item-row__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.item-row__title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+}
+
+.item-row__meta {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.item-row__status {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  width: 32px;
+  text-align: center;
+}
+
+/* ============================================
+   8. CONTENT MODAL (scenarios, topics, etc.)
+   ============================================ */
+.content-modal {
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px;
+  width: 92%;
+  max-width: 720px;
+  max-height: 88vh;
+  overflow-y: auto;
+  position: relative;
+  transform: scale(0.92) translateY(20px);
+  transition: transform var(--transition-slow);
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(109, 40, 217, 0.15);
+}
+
+.modal-overlay--visible .content-modal {
+  transform: scale(1) translateY(0);
+}
+
+.content-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.content-modal__type-badge {
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.content-modal__close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+
+.content-modal__close:hover {
+  background: var(--color-error);
+  color: white;
+}
+
+.content-modal__title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 4px;
+  color: var(--color-text-primary);
+}
+
+.content-modal__meta {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-bottom: 18px;
+}
+
+.content-modal__body {
+  margin-bottom: 22px;
+}
+
+.content-modal__footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ============================================
+   8a. SCENARIO (comic panels)
+   ============================================ */
+.scenario {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.scenario__panel {
+  position: relative;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.scenario__panel-num {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.04em;
+}
+
+.scenario__panel-emoji {
+  font-size: 2.6rem;
+  align-self: center;
+  margin-top: 14px;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+.scenario__bubble {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--color-bg-deep);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-top: 12px;
+}
+
+.scenario__caption {
+  font-size: 0.7rem;
+  font-style: italic;
+  margin-top: 8px;
+  opacity: 0.95;
+}
+
+/* ============================================
+   8b. TOPIC explainer
+   ============================================ */
+.topic__section {
+  background: var(--color-bg-deep);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+}
+
+.topic__heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--color-primary-light);
+}
+
+.topic__body {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ============================================
+   8c. EXERCISE / QUIZ
+   ============================================ */
+.exercise__intro {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+}
+
+.exercise__list {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  counter-reset: exq;
+}
+
+.exercise__q {
+  background: var(--color-bg-deep);
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  counter-increment: exq;
+}
+
+.exercise__q::before {
+  content: counter(exq) ".";
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-right: 6px;
+}
+
+.exercise__label {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.exercise__input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--color-bg-surface);
+  border: 2px solid var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  color: var(--color-text-primary);
+  font-family: 'Lexend', sans-serif;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.exercise__input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+  outline: none;
+}
+
+.exercise__input--ok {
+  border-color: var(--color-success);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.exercise__input--bad {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.exercise__controls {
+  margin-top: 14px;
+  display: flex;
+  gap: 10px;
+}
+
+.exercise__result {
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  min-height: 22px;
+}
+
+.exercise__result--success {
+  color: var(--color-success);
+}
+
+.quiz__q {
+  background: var(--color-bg-deep);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  margin-bottom: 12px;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.quiz__option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  margin: 4px 0;
+  background: var(--color-bg-surface);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all var(--transition-fast);
+}
+
+.quiz__option:hover {
+  background: var(--color-bg-surface-hover);
+}
+
+.quiz__option--ok {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: var(--color-success);
+}
+
+.quiz__option--bad {
+  background: rgba(239, 68, 68, 0.18);
+  border-color: var(--color-error);
+}
+
+/* ============================================
+   8d. VIDEO placeholder
+   ============================================ */
+.video__player {
+  position: relative;
+  border-radius: var(--radius-lg);
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.video__play {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  animation: pulse 2.4s ease infinite;
+}
+
+.video__duration {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  color: white;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.video__desc {
+  font-size: 0.88rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+/* ============================================
+   8e. PROJECT brief
+   ============================================ */
+.project__brief {
+  font-size: 0.95rem;
+  color: var(--color-text-primary);
+  background: var(--color-bg-deep);
+  padding: 14px 16px;
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.project__heading {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.project__steps {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--color-bg-deep);
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.project__check {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--color-primary);
+}
+
+.project__step label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.project__check:checked + label {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+/* ============================================
+   9. DASHBOARD ENTRY TILE
+   ============================================ */
+.card--curriculum {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  background: linear-gradient(135deg,
+    rgba(99, 102, 241, 0.18),
+    rgba(168, 85, 247, 0.10));
+  border-color: rgba(99, 102, 241, 0.3);
+  cursor: pointer;
+}
+
+.card--curriculum:hover {
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 6px 24px rgba(99, 102, 241, 0.2);
+}
+
+.card__curriculum-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.card__curriculum-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.card__curriculum-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.card__curriculum-cta {
+  margin-top: auto;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: var(--color-primary-light);
+}
+
+/* ============================================
+   10. RESPONSIVE
+   ============================================ */
+@media (max-width: 720px) {
+  .scenario {
+    grid-template-columns: 1fr;
+  }
+  .course-banner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .course-banner__main {
+    width: 100%;
+  }
+  .curriculum__filters--meta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .curriculum__filter-group {
+    justify-content: space-between;
+  }
+  .curriculum__select {
+    flex: 1;
+  }
+}

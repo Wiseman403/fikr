@@ -9,6 +9,9 @@
   <meta name="description" content="Fikr is a pioneering educational social network for children aged 8-16, transforming passive digital consumers into active creators in a safe, moderated environment.">
   <meta name="theme-color" content="#6D28D9">
 
+  <!-- Brand favicon (SVG with prefers-color-scheme support) -->
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+
   <!-- Preconnect for Lexend font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,7 +30,29 @@
   <nav class="landing-nav" id="landing-nav">
     <div class="landing-nav__inner">
       <a href="#" class="landing-nav__logo">
-        <span>💡</span>
+        <svg class="fikr-logo" viewBox="0 0 64 64"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="fikr-violet-nav" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#A78BFA"/>
+              <stop offset="60%"  stop-color="#7C3AED"/>
+              <stop offset="100%" stop-color="#6D28D9"/>
+            </linearGradient>
+            <radialGradient id="fikr-ambre-nav" cx="100%" cy="100%" r="75%">
+              <stop offset="0%"  stop-color="#F59E0B" stop-opacity="0.95"/>
+              <stop offset="45%" stop-color="#F59E0B" stop-opacity="0.45"/>
+              <stop offset="85%" stop-color="#F59E0B" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="fikr-shadow-nav" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.45"/>
+            </filter>
+          </defs>
+          <rect width="64" height="64" rx="16" fill="url(#fikr-violet-nav)"/>
+          <rect width="64" height="64" rx="16" fill="url(#fikr-ambre-nav)"/>
+          <rect x="18" y="18" width="28" height="28" rx="6"
+                class="fikr-logo__window" filter="url(#fikr-shadow-nav)"/>
+          <circle cx="49" cy="49" r="5.5" fill="#F59E0B"/>
+        </svg>
         <span>Fikr</span>
       </a>
       <div class="landing-nav__links">
@@ -394,7 +419,32 @@
   <footer class="landing-footer">
     <div class="landing-footer__inner">
       <div class="landing-footer__brand">
-        <div class="landing-footer__logo">💡 Fikr</div>
+        <div class="landing-footer__logo">
+          <svg class="fikr-logo" viewBox="0 0 64 64"
+               xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="fikr-violet-foot" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#A78BFA"/>
+                <stop offset="60%"  stop-color="#7C3AED"/>
+                <stop offset="100%" stop-color="#6D28D9"/>
+              </linearGradient>
+              <radialGradient id="fikr-ambre-foot" cx="100%" cy="100%" r="75%">
+                <stop offset="0%"  stop-color="#F59E0B" stop-opacity="0.95"/>
+                <stop offset="45%" stop-color="#F59E0B" stop-opacity="0.45"/>
+                <stop offset="85%" stop-color="#F59E0B" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="fikr-shadow-foot" x="-25%" y="-25%" width="150%" height="150%">
+                <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.45"/>
+              </filter>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="url(#fikr-violet-foot)"/>
+            <rect width="64" height="64" rx="16" fill="url(#fikr-ambre-foot)"/>
+            <rect x="18" y="18" width="28" height="28" rx="6"
+                  class="fikr-logo__window" filter="url(#fikr-shadow-foot)"/>
+            <circle cx="49" cy="49" r="5.5" fill="#F59E0B"/>
+          </svg>
+          <span>Fikr</span>
+        </div>
         <p>Learn. Create. Share.</p>
       </div>
       <div class="landing-footer__links">

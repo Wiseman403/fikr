@@ -16,6 +16,8 @@
 import { createStore } from './modules/state.js';
 import { initVideoEngine, renderStreamPreview } from './modules/video-engine.js';
 import { initParentalGate } from './modules/safety.js';
+import { initCurriculum } from './modules/curriculum.js';
+import { COUNTS as CURRICULUM_COUNTS } from './modules/curriculum-data.js';
 
 // ═══════════════════════════════════════════════════════════════════
 //  MOCK DATA
@@ -126,6 +128,8 @@ class FikrApp {
       level: 12,
       badges: ['🏆', '⭐', '🎨', '🔬'],
       joinedClubIds: [],
+      completedItemIds: [],     // Curriculum items completed
+      masteredCourseIds: [],    // Curriculum courses 100% done
     });
 
     // 2. Cache DOM references
@@ -164,6 +168,9 @@ class FikrApp {
 
     // 13. Keyboard shortcuts (1-5 for nav)
     this.initKeyboardShortcuts();
+
+    // 14. Curriculum module (Years → Courses → Course Detail)
+    this.initCurriculumModule();
 
     console.log('[Fikr] ✨ Application initialised');
   }
@@ -227,6 +234,14 @@ class FikrApp {
       gateCancel:      document.getElementById('gate-cancel'),
       // Toast
       toastContainer:  document.getElementById('toast-container'),
+      // Curriculum
+      curriculumTile:    document.getElementById('curriculum-tile'),
+      curriculumTileDesc:document.getElementById('curriculum-tile-desc'),
+      statLessonsDone:   document.getElementById('stat-lessons-done'),
+      yearsView:         document.getElementById('view-years'),
+      coursesView:       document.getElementById('view-courses'),
+      courseDetailView:  document.getElementById('view-course-detail'),
+      curriculumModal:   document.getElementById('curriculum-modal'),
     };
   }
 
@@ -346,8 +361,9 @@ class FikrApp {
       item.addEventListener('click', () => {
         const view   = item.dataset.view;
         const action = item.dataset.action;
-        if (view)                    this.switchView(view);
-        else if (action === 'settings') this.handleSettingsClick();
+        if (view)                          this.switchView(view);
+        else if (action === 'settings')    this.handleSettingsClick();
+        else if (action === 'curriculum')  this.handleCurriculumClick();
       });
     });
 
@@ -371,9 +387,15 @@ class FikrApp {
     const target = document.getElementById(`view-${viewId}`);
     if (target) target.classList.add('view--active');
 
-    // Update sidebar
+    // Update sidebar — curriculum sub-views (years/courses/course-detail)
+    // all keep the "Curriculum" sidebar item highlighted.
+    const curriculumViews = new Set(['years', 'courses', 'course-detail']);
+    const sidebarMatchView = curriculumViews.has(viewId) ? null : viewId;
     this.dom.navItems.forEach((item) => {
-      item.classList.toggle('sidebar__nav-item--active', item.dataset.view === viewId);
+      const isCurriculum = item.dataset.action === 'curriculum';
+      item.classList.toggle('sidebar__nav-item--active',
+        (sidebarMatchView && item.dataset.view === sidebarMatchView) ||
+        (curriculumViews.has(viewId) && isCurriculum));
     });
 
     // Lazy-init views on first visit
@@ -397,6 +419,68 @@ class FikrApp {
       this.dom.navItems.forEach((item) => {
         item.classList.toggle('sidebar__nav-item--active', item.dataset.action === 'settings');
       });
+    }
+  }
+
+  // ─── Curriculum ───────────────────────────────────────────────
+
+  /**
+   * Opens the Curriculum landing (Years grid). Triggered from the
+   * sidebar nav item or the dashboard tile.
+   */
+  handleCurriculumClick() {
+    if (!this.curriculum) return;
+    this.curriculum.showYears();
+  }
+
+  /**
+   * Wires up the curriculum module: passes container references,
+   * forwards earn-points / toast hooks, and bridges completion
+   * persistence with the reactive store.
+   */
+  initCurriculumModule() {
+    if (!this.dom.yearsView) return;
+
+    this.curriculum = initCurriculum({
+      yearsContainer:   this.dom.yearsView,
+      coursesContainer: this.dom.coursesView,
+      detailContainer:  this.dom.courseDetailView,
+      modalOverlay:     this.dom.curriculumModal,
+      switchView:       (id) => this.switchView(id),
+      completedIds:     this.store.state.completedItemIds || [],
+      onEarnPoints:     (amount /*, item */) => {
+        this.store.state.learningPoints += amount;
+      },
+      onShowToast:      (type, title, msg) => this.showToast(type, title, msg),
+      onMasterCourse:   (course) => {
+        const ids = [...(this.store.state.masteredCourseIds || [])];
+        if (!ids.includes(course.id)) {
+          ids.push(course.id);
+          this.store.state.masteredCourseIds = ids;
+          this.saveSettings();
+        }
+      },
+      onCompletedChange: (ids) => {
+        this.store.state.completedItemIds = ids;
+        this.saveSettings();
+      },
+    });
+
+    // Update the Lessons-Done stat reactively
+    this.store.subscribe('completedItemIds', (ids) => {
+      const count = (ids || []).length;
+      if (this.dom.statLessonsDone) this.dom.statLessonsDone.textContent = count;
+      if (this.dom.curriculumTileDesc) {
+        const total = CURRICULUM_COUNTS.items;
+        this.dom.curriculumTileDesc.textContent = count === 0
+          ? `Pick your school year and start a course →`
+          : `${count}/${total} lessons completed · keep it up!`;
+      }
+    });
+
+    // Dashboard tile → open curriculum
+    if (this.dom.curriculumTile) {
+      this.dom.curriculumTile.addEventListener('click', () => this.handleCurriculumClick());
     }
   }
 
@@ -905,6 +989,8 @@ class FikrApp {
       userName:     this.store.state.userName,
       userAvatar:   this.store.state.userAvatar,
       joinedClubIds: this.store.state.joinedClubIds || [],
+      completedItemIds:  this.store.state.completedItemIds || [],
+      masteredCourseIds: this.store.state.masteredCourseIds || [],
       toggles,
       contentFilter: filterEl ? filterEl.value : 'moderate',
     };
@@ -932,6 +1018,8 @@ class FikrApp {
     if (data.userName)  this.store.state.userName  = data.userName;
     if (data.userAvatar) this.store.state.userAvatar = data.userAvatar;
     if (data.joinedClubIds) this.store.state.joinedClubIds = data.joinedClubIds;
+    if (data.completedItemIds)  this.store.state.completedItemIds  = data.completedItemIds;
+    if (data.masteredCourseIds) this.store.state.masteredCourseIds = data.masteredCourseIds;
 
     // Restore toggles and apply behaviour
     if (data.toggles) {

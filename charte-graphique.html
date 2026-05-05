@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Fikr — Charte Graphique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#6D28D9; --primary-light:#8B5CF6; --primary-dark:#5B21B6;
+    --accent:#F59E0B; --accent-light:#FBBF24; --accent-dark:#D97706;
+    --bg-deep:#0F172A; --bg-surface:#1E293B; --bg-surface-hover:#253449; --bg-elevated:#334155;
+    --text-primary:#F8FAFC; --text-secondary:#94A3B8; --text-muted:#64748B;
+    --success:#10B981; --error:#EF4444; --info:#3B82F6; --warning:#F59E0B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Lexend',sans-serif;background:var(--bg-deep);color:var(--text-primary);line-height:1.6;padding:48px 24px}
+  .wrap{max-width:1200px;margin:0 auto}
+  header{text-align:center;padding:48px 0 64px;border-bottom:1px solid var(--bg-elevated);margin-bottom:64px}
+  .logo{font-size:3.5rem;font-weight:800;background:linear-gradient(135deg,var(--primary-light),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+  .tagline{color:var(--text-secondary);font-size:1.1rem;font-weight:300;letter-spacing:.05em}
+  .doc-meta{margin-top:24px;color:var(--text-muted);font-size:.875rem}
+  h2{font-size:2rem;font-weight:700;margin-bottom:8px}
+  h2 .num{color:var(--accent);margin-right:12px;font-weight:800}
+  h3{font-size:1.25rem;font-weight:600;margin:32px 0 16px;color:var(--text-primary)}
+  .section{margin-bottom:80px}
+  .section-intro{color:var(--text-secondary);margin-bottom:32px;max-width:720px}
+
+  /* ====== COULEURS ====== */
+  .palette{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .swatch{border-radius:16px;overflow:hidden;background:var(--bg-surface);box-shadow:0 4px 20px rgba(0,0,0,.25)}
+  .swatch__color{height:120px;display:flex;align-items:flex-end;padding:16px;font-weight:600}
+  .swatch__info{padding:16px}
+  .swatch__name{font-weight:600;font-size:.95rem;margin-bottom:4px}
+  .swatch__hex{color:var(--text-secondary);font-family:'Courier New',monospace;font-size:.85rem}
+  .swatch__use{color:var(--text-muted);font-size:.8rem;margin-top:8px}
+
+  /* ====== TYPOGRAPHIE ====== */
+  .type-card{background:var(--bg-surface);padding:32px;border-radius:16px;margin-bottom:16px}
+  .type-sample{margin-bottom:8px}
+  .type-meta{color:var(--text-muted);font-size:.85rem;font-family:'Courier New',monospace}
+  .h1-sample{font-size:3rem;font-weight:800;line-height:1.1}
+  .h2-sample{font-size:2rem;font-weight:700}
+  .h3-sample{font-size:1.5rem;font-weight:600}
+  .body-sample{font-size:1rem;font-weight:400}
+  .small-sample{font-size:.875rem;font-weight:400;color:var(--text-secondary)}
+
+  /* ====== BOUTONS ====== */
+  .btn-row{display:flex;gap:16px;flex-wrap:wrap;background:var(--bg-surface);padding:32px;border-radius:16px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:9999px;font-weight:600;font-size:.875rem;border:none;cursor:pointer;font-family:inherit}
+  .btn--primary{background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;box-shadow:0 0 20px rgba(109,40,217,.4)}
+  .btn--accent{background:linear-gradient(135deg,var(--accent-dark),var(--accent));color:var(--bg-deep);box-shadow:0 0 20px rgba(245,158,11,.4)}
+  .btn--ghost{background:var(--bg-elevated);color:var(--text-secondary)}
+  .btn--text{background:transparent;color:var(--primary-light)}
+
+  /* ====== RAYONS / OMBRES ====== */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  .demo{background:var(--bg-surface);padding:24px;text-align:center}
+  .demo__box{height:80px;background:linear-gradient(135deg,var(--primary),var(--primary-light));margin-bottom:12px}
+  .demo__lbl{font-size:.85rem;color:var(--text-secondary);font-family:'Courier New',monospace}
+  .r-sm .demo__box{border-radius:12px}
+  .r-md .demo__box{border-radius:16px}
+  .r-lg .demo__box{border-radius:24px}
+  .r-xl .demo__box{border-radius:32px}
+  .r-pill .demo__box{border-radius:9999px}
+  .shadow-card{background:var(--bg-surface);padding:32px;border-radius:16px;text-align:center}
+  .s-sm{box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .s-md{box-shadow:0 4px 20px rgba(0,0,0,.25)}
+  .s-lg{box-shadow:0 8px 40px rgba(0,0,0,.35)}
+  .s-glow-p{box-shadow:0 0 20px rgba(109,40,217,.4)}
+  .s-glow-a{box-shadow:0 0 20px rgba(245,158,11,.4)}
+
+  /* ====== PRINCIPES ====== */
+  .principle{background:var(--bg-surface);padding:24px;border-radius:16px;border-left:4px solid var(--primary)}
+  .principle h4{font-size:1.05rem;margin-bottom:8px;color:var(--primary-light)}
+  .principle p{color:var(--text-secondary);font-size:.95rem}
+  .principles{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+
+  /* ====== SEMANTIQUES ====== */
+  .sem-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .sem{padding:16px;border-radius:12px;text-align:center;font-weight:600}
+  .sem--success{background:rgba(16,185,129,.12);color:var(--success);border:1px solid var(--success)}
+  .sem--error{background:rgba(239,68,68,.12);color:var(--error);border:1px solid var(--error)}
+  .sem--info{background:rgba(59,130,246,.12);color:var(--info);border:1px solid var(--info)}
+  .sem--warning{background:rgba(245,158,11,.12);color:var(--warning);border:1px solid var(--warning)}
+
+  footer{text-align:center;padding:48px 0;border-top:1px solid var(--bg-elevated);color:var(--text-muted);font-size:.875rem;margin-top:80px}
+
+  @media(max-width:900px){
+    .palette,.sem-row{grid-template-columns:repeat(2,1fr)}
+    .grid5{grid-template-columns:repeat(2,1fr)}
+    .grid3{grid-template-columns:1fr}
+    .principles{grid-template-columns:1fr}
+    .logo{font-size:2.5rem}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">Fikr</div>
+    <div class="tagline">Learn. Create. Share.</div>
+    <div class="doc-meta">Charte Graphique — v1.0 — Avril 2026</div>
+  </header>
+
+  <!-- ============ 1. IDENTITE ============ -->
+  <section class="section">
+    <h2><span class="num">01.</span>Identité</h2>
+    <p class="section-intro">Fikr est un réseau social éducatif pionnier destiné aux enfants de 8 à 16 ans, transformant les consommateurs numériques passifs en créateurs actifs dans un environnement sûr et modéré.</p>
+
+    <div class="principles">
+      <div class="principle"><h4>Vibrant et énergique</h4><p>Des dégradés violets et ambrés pour stimuler la créativité et l'engagement.</p></div>
+      <div class="principle"><h4>Sûr et bienveillant</h4><p>Des contrastes maîtrisés et des coins arrondis pour un univers rassurant adapté aux enfants.</p></div>
+      <div class="principle"><h4>Moderne et ludique</h4><p>Une typographie ronde (Lexend), des animations douces et un layout Bento.</p></div>
+      <div class="principle"><h4>Lisible et accessible</h4><p>Hiérarchie claire, mode clair/sombre et option no-animations pour l'accessibilité.</p></div>
+    </div>
+  </section>
+
+  <!-- ============ 2. COULEURS ============ -->
+  <section class="section">
+    <h2><span class="num">02.</span>Palette de couleurs</h2>
+    <p class="section-intro">La palette repose sur un duo signature <strong>violet × ambre</strong> sur un fond bleu nuit profond, créant une atmosphère premium et chaleureuse.</p>
+
+    <h3>Couleurs primaires (Violet)</h3>
+    <div class="palette">
+      <div class="swatch"><div class="swatch__color" style="background:#6D28D9;color:#fff">Primary</div><div class="swatch__info"><div class="swatch__name">Primary</div><div class="swatch__hex">#6D28D9</div><div class="swatch__use">Boutons principaux, liens, accents</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#8B5CF6;color:#fff">Light</div><div class="swatch__info"><div class="swatch__name">Primary Light</div><div class="swatch__hex">#8B5CF6</div><div class="swatch__use">Hover, dégradés, texte gradient</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#5B21B6;color:#fff">Dark</div><div class="swatch__info"><div class="swatch__name">Primary Dark</div><div class="swatch__hex">#5B21B6</div><div class="swatch__use">Etats actifs, bordures</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:rgba(109,40,217,.4);color:#fff">Glow</div><div class="swatch__info"><div class="swatch__name">Primary Glow</div><div class="swatch__hex">rgba(109,40,217,.4)</div><div class="swatch__use">Halos lumineux, effets glow</div></div></div>
+    </div>
+
+    <h3>Couleurs d'accent (Ambre)</h3>
+    <div class="palette">
+      <div class="swatch"><div class="swatch__color" style="background:#F59E0B;color:#0F172A">Accent</div><div class="swatch__info"><div class="swatch__name">Accent</div><div class="swatch__hex">#F59E0B</div><div class="swatch__use">CTA secondaires, points, badges</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#FBBF24;color:#0F172A">Light</div><div class="swatch__info"><div class="swatch__name">Accent Light</div><div class="swatch__hex">#FBBF24</div><div class="swatch__use">Highlights, étoiles</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#D97706;color:#fff">Dark</div><div class="swatch__info"><div class="swatch__name">Accent Dark</div><div class="swatch__hex">#D97706</div><div class="swatch__use">Dégradés, ombres chaudes</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:rgba(245,158,11,.4);color:#fff">Glow</div><div class="swatch__info"><div class="swatch__name">Accent Glow</div><div class="swatch__hex">rgba(245,158,11,.4)</div><div class="swatch__use">Halos chauds</div></div></div>
+    </div>
+
+    <h3>Arrière-plans (mode sombre)</h3>
+    <div class="palette">
+      <div class="swatch"><div class="swatch__color" style="background:#0F172A;color:#fff;border:1px solid #334155">Bg Deep</div><div class="swatch__info"><div class="swatch__name">Background Deep</div><div class="swatch__hex">#0F172A</div><div class="swatch__use">Fond global de l'app</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#1E293B;color:#fff">Surface</div><div class="swatch__info"><div class="swatch__name">Surface</div><div class="swatch__hex">#1E293B</div><div class="swatch__use">Cartes, modales, sidebar</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#253449;color:#fff">Hover</div><div class="swatch__info"><div class="swatch__name">Surface Hover</div><div class="swatch__hex">#253449</div><div class="swatch__use">État survol des surfaces</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#334155;color:#fff">Elevated</div><div class="swatch__info"><div class="swatch__name">Elevated</div><div class="swatch__hex">#334155</div><div class="swatch__use">Bordures, séparateurs, ghost</div></div></div>
+    </div>
+
+    <h3>Texte</h3>
+    <div class="palette">
+      <div class="swatch"><div class="swatch__color" style="background:#F8FAFC;color:#0F172A">Primary</div><div class="swatch__info"><div class="swatch__name">Text Primary</div><div class="swatch__hex">#F8FAFC</div><div class="swatch__use">Titres, contenu principal</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#94A3B8;color:#0F172A">Secondary</div><div class="swatch__info"><div class="swatch__name">Text Secondary</div><div class="swatch__hex">#94A3B8</div><div class="swatch__use">Sous-titres, descriptions</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:#64748B;color:#fff">Muted</div><div class="swatch__info"><div class="swatch__name">Text Muted</div><div class="swatch__hex">#64748B</div><div class="swatch__use">Métadonnées, placeholders</div></div></div>
+      <div class="swatch"><div class="swatch__color" style="background:linear-gradient(135deg,#8B5CF6,#F59E0B);color:#fff">Gradient</div><div class="swatch__info"><div class="swatch__name">Text Gradient</div><div class="swatch__hex">violet → ambre</div><div class="swatch__use">Logo, titres signature</div></div></div>
+    </div>
+
+    <h3>Couleurs sémantiques</h3>
+    <div class="sem-row">
+      <div class="sem sem--success">✓ Success · #10B981</div>
+      <div class="sem sem--error">✕ Error · #EF4444</div>
+      <div class="sem sem--info">ℹ Info · #3B82F6</div>
+      <div class="sem sem--warning">⚠ Warning · #F59E0B</div>
+    </div>
+  </section>
+
+  <!-- ============ 3. TYPOGRAPHIE ============ -->
+  <section class="section">
+    <h2><span class="num">03.</span>Typographie</h2>
+    <p class="section-intro">Police principale : <strong>Lexend</strong> — choisie pour sa lisibilité optimisée pour les jeunes lecteurs et son apparence moderne et amicale.</p>
+
+    <div class="type-card">
+      <div class="type-sample h1-sample">Apprendre, créer, partager</div>
+      <div class="type-meta">H1 — Lexend 800 — 3rem (48px) — line-height 1.1</div>
+    </div>
+    <div class="type-card">
+      <div class="type-sample h2-sample">Une plateforme pour les jeunes créateurs</div>
+      <div class="type-meta">H2 — Lexend 700 — 2rem (32px) — line-height 1.3</div>
+    </div>
+    <div class="type-card">
+      <div class="type-sample h3-sample">Un environnement sécurisé et bienveillant</div>
+      <div class="type-meta">H3 — Lexend 600 — 1.5rem (24px)</div>
+    </div>
+    <div class="type-card">
+      <div class="type-sample body-sample">Fikr transforme les enfants de consommateurs passifs de contenu en créateurs actifs, dans un cadre modéré et adapté à leur âge. Chaque interaction est pensée pour stimuler leur curiosité.</div>
+      <div class="type-meta">Body — Lexend 400 — 1rem (16px) — line-height 1.6</div>
+    </div>
+    <div class="type-card">
+      <div class="type-sample small-sample">Texte secondaire pour les métadonnées, les légendes et les informations contextuelles.</div>
+      <div class="type-meta">Small — Lexend 400 — 0.875rem (14px)</div>
+    </div>
+
+    <h3>Graisses disponibles</h3>
+    <div class="type-card" style="display:flex;gap:24px;flex-wrap:wrap;align-items:baseline">
+      <span style="font-weight:300;font-size:1.25rem">300 Light</span>
+      <span style="font-weight:400;font-size:1.25rem">400 Regular</span>
+      <span style="font-weight:500;font-size:1.25rem">500 Medium</span>
+      <span style="font-weight:600;font-size:1.25rem">600 SemiBold</span>
+      <span style="font-weight:700;font-size:1.25rem">700 Bold</span>
+      <span style="font-weight:800;font-size:1.25rem">800 ExtraBold</span>
+    </div>
+  </section>
+
+  <!-- ============ 4. BOUTONS ============ -->
+  <section class="section">
+    <h2><span class="num">04.</span>Boutons</h2>
+    <p class="section-intro">Quatre variantes principales avec une forme pilule (border-radius 9999px) et des effets glow caractéristiques.</p>
+
+    <div class="btn-row">
+      <button class="btn btn--primary">Lancer Fikr →</button>
+      <button class="btn btn--accent">Action secondaire</button>
+      <button class="btn btn--ghost">Ghost</button>
+      <button class="btn btn--text">Texte</button>
+    </div>
+  </section>
+
+  <!-- ============ 5. RAYONS ============ -->
+  <section class="section">
+    <h2><span class="num">05.</span>Rayons d'arrondi</h2>
+    <p class="section-intro">Les coins arrondis créent une atmosphère douce et amicale, essentielle pour un public jeune.</p>
+
+    <div class="grid5">
+      <div class="demo r-sm"><div class="demo__box"></div><div class="demo__lbl">--radius-sm · 12px</div></div>
+      <div class="demo r-md"><div class="demo__box"></div><div class="demo__lbl">--radius-md · 16px</div></div>
+      <div class="demo r-lg"><div class="demo__box"></div><div class="demo__lbl">--radius-lg · 24px</div></div>
+      <div class="demo r-xl"><div class="demo__box"></div><div class="demo__lbl">--radius-xl · 32px</div></div>
+      <div class="demo r-pill"><div class="demo__box"></div><div class="demo__lbl">--radius-pill · 9999px</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 6. OMBRES ============ -->
+  <section class="section">
+    <h2><span class="num">06.</span>Ombres et effets glow</h2>
+    <p class="section-intro">Trois niveaux d'élévation et deux halos colorés signature de la marque.</p>
+
+    <div class="grid3">
+      <div class="shadow-card s-sm"><div class="demo__lbl">Shadow SM</div></div>
+      <div class="shadow-card s-md"><div class="demo__lbl">Shadow MD</div></div>
+      <div class="shadow-card s-lg"><div class="demo__lbl">Shadow LG</div></div>
+    </div>
+    <div class="grid3" style="margin-top:24px">
+      <div class="shadow-card s-glow-p"><div class="demo__lbl">Glow Primary (violet)</div></div>
+      <div class="shadow-card s-glow-a"><div class="demo__lbl">Glow Accent (ambre)</div></div>
+      <div class="shadow-card" style="background:rgba(255,255,255,.03);backdrop-filter:blur(12px)"><div class="demo__lbl">Glassmorphism (blur 12px)</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 7. ANIMATIONS ============ -->
+  <section class="section">
+    <h2><span class="num">07.</span>Transitions &amp; animations</h2>
+    <p class="section-intro">Mouvements subtils et rebonds ludiques. Une option <em>no-animations</em> est disponible pour l'accessibilité.</p>
+
+    <div class="type-card">
+      <h3 style="margin-top:0">Durées</h3>
+      <p style="font-family:'Courier New',monospace;color:var(--text-secondary);line-height:2">
+        --transition-fast : 150ms ease<br>
+        --transition-base : 250ms ease<br>
+        --transition-slow : 400ms cubic-bezier(0.4, 0, 0.2, 1)<br>
+        --transition-bounce : 500ms cubic-bezier(0.34, 1.56, 0.64, 1)
+      </p>
+      <h3>Animations clés</h3>
+      <p style="color:var(--text-secondary)">viewEnter · pulse · float · shimmer · gradientShift · bounceIn · slideUp · toastIn / toastOut · pointsPop · spin · waveHand · shake</p>
+    </div>
+  </section>
+
+  <!-- ============ 8. LAYOUT ============ -->
+  <section class="section">
+    <h2><span class="num">08.</span>Layout &amp; grille</h2>
+    <p class="section-intro">Architecture de page basée sur une sidebar fixe et une grille Bento adaptative.</p>
+
+    <div class="type-card">
+      <h3 style="margin-top:0">Constantes de layout</h3>
+      <p style="font-family:'Courier New',monospace;color:var(--text-secondary);line-height:2">
+        --sidebar-width : 280px (desktop) → 72px (tablette) → 0 / off-canvas (mobile)<br>
+        --content-padding : 32px → 20px → 16px<br>
+        Bento grid : 4 colonnes → 3 → 2 → 1 selon les breakpoints
+      </p>
+      <h3>Breakpoints responsive</h3>
+      <p style="font-family:'Courier New',monospace;color:var(--text-secondary);line-height:2">
+        Desktop : > 1200px<br>
+        Laptop : ≤ 1200px<br>
+        Tablette : ≤ 900px<br>
+        Mobile : ≤ 600px
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ 9. THEMES ============ -->
+  <section class="section">
+    <h2><span class="num">09.</span>Thèmes</h2>
+    <p class="section-intro">Deux thèmes disponibles via l'attribut <code>data-theme</code> : sombre (par défaut) et clair.</p>
+
+    <div class="grid3">
+      <div class="shadow-card s-md" style="background:#0F172A;color:#F8FAFC"><strong>Mode sombre</strong><div class="demo__lbl" style="margin-top:8px">par défaut · #0F172A</div></div>
+      <div class="shadow-card s-md" style="background:#FFFFFF;color:#0F172A"><strong>Mode clair</strong><div class="demo__lbl" style="margin-top:8px;color:#475569">data-theme="light" · #F1F5F9</div></div>
+      <div class="shadow-card s-md"><strong>No-animations</strong><div class="demo__lbl" style="margin-top:8px">classe .no-animations · accessibilité</div></div>
+    </div>
+  </section>
+
+  <footer>
+    Fikr © 2026 — Empowering young creators worldwide. — Charte graphique générée le 25/04/2026.
+  </footer>
+
+</div>
+</body>
+</html>

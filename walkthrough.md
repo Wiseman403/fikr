@@ -15,20 +15,27 @@ graph LR
   F --> G
 ```
 
-## File Structure (10 Files)
+## File Structure
 
 | File | Purpose |
 |------|---------|
 | [index.html](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/index.html) | Semantic HTML5 entry point with all views |
+| [app.html](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/app.html) | Single-Page Application shell (8 views) |
+| [logo.svg](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/logo.svg) | Brand mark — favicon with `prefers-color-scheme` support |
 | [css/main.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/main.css) | Design tokens, reset, layout, buttons, animations |
 | [css/components/sidebar.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/sidebar.css) | Fixed sidebar navigation |
-| [css/components/card.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/card.css) | Bento Grid cards + Creative Clubs view |
+| [css/components/card.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/card.css) | Bento Grid cards + Creative Clubs view + clubs search |
 | [css/components/feed.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/feed.css) | Scroll-snap video feed |
 | [css/components/modal.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/modal.css) | Parental Gate modal |
+| [css/components/profile.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/profile.css) | Profile banner / stats / badges / creations |
+| [css/components/settings.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/settings.css) | Settings cards / toggles / avatar picker |
+| [css/components/curriculum.css](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/css/components/curriculum.css) | Years grid / Course cards / Item list / Content modal |
 | [js/app.js](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/js/app.js) | Main orchestrator (FikrApp class) |
 | [js/modules/state.js](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/js/modules/state.js) | Proxy-based reactive store |
 | [js/modules/video-engine.js](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/js/modules/video-engine.js) | IntersectionObserver video engine |
 | [js/modules/safety.js](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/js/modules/safety.js) | Parental Gate + ContentSanitizer |
+| [js/modules/curriculum.js](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/js/modules/curriculum.js) | Year → Course → Lesson view engine + content modal |
+| [js/modules/curriculum-data.js](file:///c:/Users/mystery/Downloads/FreePoo/Fickr/js/modules/curriculum-data.js) | Mock dataset (6 years × 9 subjects × 10 items ≈ 540) |
 
 ## Features Implemented
 
@@ -65,6 +72,15 @@ The default view uses `CSS Grid` with varying column/row spans for a playful, mo
 - **Typography**: Lexend (neuro-inclusive)
 - **Border radius**: 24px+ on cards
 - **Micro-interactions**: hover scales, glow effects, waving hand, floating shapes, shimmer progress bars, bounce-in achievements, toast slide-ins
+
+### 7. Curriculum Path 📘
+- **Three drill-down views**: Years (6 cards) → Courses (9 subject cards per year) → Course Detail (10 items + filters)
+- **6 item types** with rich modal content: 📖 Scenarios (4-panel comics), 📚 Topics (sectioned explainers), ✏️ Exercises (multi-step input + answer-checking), ❓ Quizzes (multiple-choice), 🎬 Videos (gradient placeholder), 🛠️ Projects (checklist briefs)
+- **Triple filtering**: type pills + difficulty dropdown + status dropdown + free-text search — all composable
+- **Sequential unlock**: first 3 items always available; later items unlock as you progress
+- **Reactive rewards**: 20–60 points per completion (by type), course-mastery toast at 100%, dashboard "Lessons Done" stat updates live
+- **Persistence**: completed item IDs and mastered course IDs survive reloads via `localStorage`
+- **Two entry points**: sidebar 📘 Curriculum nav item AND a dashboard Bento tile
 
 ## Verification
 

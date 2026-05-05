@@ -5,9 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
-  <title>Fikr — Learn, Create, Grow 💡</title>
+  <title>Fikr — Learn, Create, Grow</title>
   <meta name="description" content="Fikr is a safe educational social network for kids aged 8-16. Explore learning streams, join creative clubs, and grow your knowledge in a moderated environment.">
   <meta name="theme-color" content="#6D28D9">
+
+  <!-- Brand favicon (SVG with prefers-color-scheme support) -->
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
 
   <!-- Preconnect for fast font loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,6 +25,7 @@
   <link rel="stylesheet" href="css/components/modal.css">
   <link rel="stylesheet" href="css/components/profile.css">
   <link rel="stylesheet" href="css/components/settings.css">
+  <link rel="stylesheet" href="css/components/curriculum.css">
 </head>
 
 <body>
@@ -39,7 +43,29 @@
 
       <!-- Logo -->
       <div class="sidebar__logo">
-        <span class="sidebar__logo-icon">💡</span>
+        <svg class="fikr-logo sidebar__logo-mark" viewBox="0 0 64 64"
+             xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="fikr-violet-side" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#A78BFA"/>
+              <stop offset="60%"  stop-color="#7C3AED"/>
+              <stop offset="100%" stop-color="#6D28D9"/>
+            </linearGradient>
+            <radialGradient id="fikr-ambre-side" cx="100%" cy="100%" r="75%">
+              <stop offset="0%"  stop-color="#F59E0B" stop-opacity="0.95"/>
+              <stop offset="45%" stop-color="#F59E0B" stop-opacity="0.45"/>
+              <stop offset="85%" stop-color="#F59E0B" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="fikr-shadow-side" x="-25%" y="-25%" width="150%" height="150%">
+              <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.45"/>
+            </filter>
+          </defs>
+          <rect width="64" height="64" rx="16" fill="url(#fikr-violet-side)"/>
+          <rect width="64" height="64" rx="16" fill="url(#fikr-ambre-side)"/>
+          <rect x="18" y="18" width="28" height="28" rx="6"
+                class="fikr-logo__window" filter="url(#fikr-shadow-side)"/>
+          <circle cx="49" cy="49" r="5.5" fill="#F59E0B"/>
+        </svg>
         <h1 class="sidebar__logo-text">Fikr</h1>
       </div>
 
@@ -61,6 +87,12 @@
                 data-view="clubs" id="nav-clubs" aria-label="Creative Clubs">
           <span class="sidebar__nav-icon">🎨</span>
           <span class="sidebar__nav-label">Creative Clubs</span>
+        </button>
+
+        <button class="sidebar__nav-item"
+                data-action="curriculum" id="nav-curriculum" aria-label="Curriculum">
+          <span class="sidebar__nav-icon">📘</span>
+          <span class="sidebar__nav-label">Curriculum</span>
         </button>
 
         <button class="sidebar__nav-item"
@@ -144,9 +176,19 @@
           <!-- Stat Card -->
           <div class="card card--stat">
             <span class="card__stat-icon">📚</span>
-            <div class="card__stat-value">42</div>
+            <div class="card__stat-value" id="stat-lessons-done">0</div>
             <p class="card__stat-label">Lessons Done</p>
           </div>
+
+          <!-- Curriculum Entry Tile -->
+          <button class="card card--curriculum" id="curriculum-tile">
+            <span class="card__curriculum-icon">📘</span>
+            <h3 class="card__curriculum-title">My Curriculum</h3>
+            <p class="card__curriculum-desc" id="curriculum-tile-desc">
+              Pick your school year and start a course →
+            </p>
+            <span class="card__curriculum-cta">Open Curriculum →</span>
+          </button>
 
           <!-- Stream Preview Card -->
           <div class="card card--stream-preview">
@@ -228,6 +270,15 @@
           </p>
         </div>
       </section>
+
+      <!-- ── CURRICULUM: YEARS VIEW ──────────────────────────── -->
+      <section class="view" id="view-years" aria-label="Curriculum Years"></section>
+
+      <!-- ── CURRICULUM: COURSES VIEW ────────────────────────── -->
+      <section class="view" id="view-courses" aria-label="Courses for selected year"></section>
+
+      <!-- ── CURRICULUM: COURSE DETAIL VIEW ──────────────────── -->
+      <section class="view" id="view-course-detail" aria-label="Course detail"></section>
 
       <!-- ── PROFILE VIEW ──────────────────────────────────── -->
       <section class="view" id="view-profile" aria-label="My Profile">
@@ -481,6 +532,12 @@
         <p class="modal__feedback" id="gate-feedback"></p>
       </div>
     </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         CURRICULUM CONTENT MODAL — populated by curriculum.js
+         ════════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="curriculum-modal" hidden
+         aria-modal="true" role="dialog" aria-label="Lesson content"></div>
 
     <!-- ════════════════════════════════════════════════════════
          TOAST NOTIFICATION CONTAINER

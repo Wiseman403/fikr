@@ -103,18 +103,36 @@ body.landing-page {
   gap: 10px;
   font-size: 1.5rem;
   font-weight: 800;
+  text-decoration: none;
+  color: var(--color-text-primary);
+}
+
+/* Wordmark "Fikr" gets the brand gradient text treatment.
+   Targeted via :last-child so the SVG sibling stays untouched. */
+.landing-nav__logo > span:last-child {
   background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-decoration: none;
 }
 
-.landing-nav__logo span:first-child {
-  -webkit-text-fill-color: initial;
-  font-size: 1.6rem;
-  animation: float 3s ease-in-out infinite;
-  display: inline-block;
+/* Brand mark sizing for the nav slot. */
+.landing-nav__logo .fikr-logo {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(109, 40, 217, 0.3));
+  transition: transform var(--transition-base);
+}
+
+.landing-nav__logo:hover .fikr-logo {
+  transform: rotate(-4deg) scale(1.05);
+}
+
+/* Window of the brand mark themes via the page's --color-bg-deep */
+.fikr-logo__window {
+  fill: var(--color-bg-deep);
 }
 
 .landing-nav__links {
@@ -743,13 +761,29 @@ body.landing-page {
 }
 
 .landing-footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-size: 1.5rem;
   font-weight: 800;
+  margin-bottom: 4px;
+}
+
+/* Brand mark sizing for the footer slot. */
+.landing-footer__logo .fikr-logo {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(109, 40, 217, 0.25));
+}
+
+/* Wordmark "Fikr" picks up the brand gradient via the SVG's sibling span. */
+.landing-footer__logo > span {
   background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 4px;
 }
 
 .landing-footer__brand p {

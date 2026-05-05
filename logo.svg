@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Fikr — Brand Mark
+  Per the Charte graphique (slide 4 — symbole & lockup):
+    • Marque carrée, coin 56px à 224px (= 25% du côté)
+    • Base violet (lavande → violet profond)
+    • Halo ambre radial ancré au coin bas-droit
+    • Fenêtre intérieure CENTRÉE, avec ombre douce
+    • Point ambre = "signal de partage", tangent au coin de la fenêtre (intersection minime)
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fikr">
+  <defs>
+    <linearGradient id="fikr-violet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#A78BFA"/>
+      <stop offset="60%"  stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+    <radialGradient id="fikr-ambre" cx="100%" cy="100%" r="75%">
+      <stop offset="0%"  stop-color="#F59E0B" stop-opacity="0.95"/>
+      <stop offset="45%" stop-color="#F59E0B" stop-opacity="0.45"/>
+      <stop offset="85%" stop-color="#F59E0B" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="fikr-shadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="2" stdDeviation="1.5" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <style>
+      .window { fill: #0F172A; }
+      @media (prefers-color-scheme: light) {
+        .window { fill: #F1F5F9; }
+      }
+    </style>
+  </defs>
+  <!-- Couche 1 : base violette -->
+  <rect width="64" height="64" rx="16" fill="url(#fikr-violet)"/>
+  <!-- Couche 2 : halo ambre superposé -->
+  <rect width="64" height="64" rx="16" fill="url(#fikr-ambre)"/>
+  <!-- Fenêtre intérieure CENTRÉE (28×28 dans 64×64, marges égales de 18) -->
+  <rect x="18" y="18" width="28" height="28" rx="6" class="window" filter="url(#fikr-shadow)"/>
+  <!-- Point ambre tangent au coin bas-droit de la fenêtre — intersection minime -->
+  <circle cx="49" cy="49" r="5.5" fill="#F59E0B"/>
+</svg>
